@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid';
 
-const Form = () => {
+const Form = (props) => {
 
     const [turno, actualizarTurno] = useState ({
         mascota: '',
@@ -36,7 +36,18 @@ const Form = () => {
 
         turno.id = uuidv4();
         actualizarError('exito') //para borrar el cartel 
-        console.log(turno);
+        // console.log(turno);
+
+        //mando el objeto con el id al array principal
+        props.crearTurno(turno) 
+        //dejar los campos del form en blanco
+        actualizarTurno({
+            mascota: '',
+            dueño: '',
+            fecha: '',
+            hora: '',   
+            sintomas: ''
+        })
     }
 
     return (
@@ -51,7 +62,7 @@ const Form = () => {
                         placeholder='Nombre mascota'
                         onChange ={actualizarState}
                         //pongo el value para poder resetear el form
-                        // value = {turno.mascota}
+                        value = {turno.mascota}
                     />
                 </label>
 
@@ -62,7 +73,7 @@ const Form = () => {
                         className='u-full-width'
                         placeholder='Nombre del dueño'
                         onChange={actualizarState}
-                        // value={turno.dueño}
+                        value={turno.dueño}
                     />
                 </label>
 
@@ -72,7 +83,7 @@ const Form = () => {
                         name='fecha'
                         className='u-full-width'
                         onChange={actualizarState}
-                        // value={turno.fecha}
+                        value={turno.fecha}
                     />
                 </label>
 
@@ -82,7 +93,7 @@ const Form = () => {
                         name='hora'
                         className='u-full-width'
                         onChange={actualizarState}
-                        // value={turno.hora}
+                        value={turno.hora}
                     />
                 </label>
 
@@ -91,7 +102,7 @@ const Form = () => {
                     id="" cols="30" rows="10" 
                     className='u-full-width' 
                     onChange={actualizarState}
-                    // value={turno.sintomas}
+                    value={turno.sintomas}
                     >
                     </textarea>
                 </label>

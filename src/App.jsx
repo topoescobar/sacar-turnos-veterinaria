@@ -1,10 +1,14 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import Form from './components/Form'
 
 function App() {
+
+  const [turnosArray, setTurnosArray] = useState([])
+
+  const crearTurno = (turno) => {
+    setTurnosArray([...turnosArray, turno])
+  }
 
   return (
     <>
@@ -13,7 +17,9 @@ function App() {
       <div className="container">
         <div className="row">
           <div className="one-half column"> 
-          <Form></Form>
+          <Form 
+          crearTurno = {crearTurno}
+          ></Form>
           </div>
           <div className="one-half column"> 2</div>
         </div>
