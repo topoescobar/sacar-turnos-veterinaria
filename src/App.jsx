@@ -1,13 +1,20 @@
 import { useState } from 'react'
 import './App.css'
 import Form from './components/Form'
+import Turno from './components/Turno'
 
 function App() {
 
   const [turnosArray, setTurnosArray] = useState([])
+  const tituloTurnos = turnosArray.length === 0 ? 'Sin turnos agendados' : 'Administrar turnos'
 
   const crearTurno = (turno) => {
     setTurnosArray([...turnosArray, turno])
+  }
+
+  const eliminarTurno= id => {
+    let turnosModificado = turnosArray.filter(tur=> tur.id !== id)
+    setTurnosArray(turnosModificado) //no hace falta el spread op xq filter crea un array nuevo
   }
 
   return (
@@ -16,16 +23,26 @@ function App() {
 
       <div className="container">
         <div className="row">
-          <div className="one-half column"> 
-          <Form 
-          crearTurno = {crearTurno}
-          ></Form>
+          <div className="one-half column">
+            <Form
+              crearTurno={crearTurno}
+            ></Form>
           </div>
-          <div className="one-half column"> 2</div>
+          <div className="one-half column">
+            <h2>{tituloTurnos}</h2>
+            {turnosArray.map(turn => (
+              <Turno
+                key={turn.id}
+                turno={turn}
+                eliminarTurno= {eliminarTurno}
+
+              ></Turno>
+            ))}
+          </div>
         </div>
       </div>
 
-    
+
     </>
   )
 }
