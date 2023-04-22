@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid'
+import PropTypes from 'prop-types';
 
 const Form = (props) => {
 
@@ -11,7 +12,7 @@ const Form = (props) => {
         sintomas: ''
     })
 
-    const [error, actualizarError] = useState('nada')
+    const [error, actualizarError] = useState(null)
 
     const actualizarState = event => {
         console.log('valor ingresado' , event.target.value);
@@ -30,16 +31,17 @@ const Form = (props) => {
         //validacion
         if (mascota.trim() == '' || dueño.trim() == '' ||
          fecha.trim() == '' || hora.trim() == '' || sintomas.trim() == ''  ) {
-            actualizarError('error')
+            actualizarError(true)
             return
         }
 
         turno.id = uuidv4();
-        actualizarError('exito') //para borrar el cartel 
+        actualizarError(false) //para borrar el cartel 
         // console.log(turno);
 
         //mando el objeto con el id al array principal
         props.crearTurno(turno) 
+
         //dejar los campos del form en blanco
         actualizarTurno({
             mascota: '',
@@ -62,7 +64,7 @@ const Form = (props) => {
                         placeholder='Nombre mascota'
                         onChange ={actualizarState}
                         //pongo el value para poder resetear el form
-                        value = {turno.mascota}
+                        value = {mascota}
                     />
                 </label>
 
@@ -73,7 +75,7 @@ const Form = (props) => {
                         className='u-full-width'
                         placeholder='Nombre del dueño'
                         onChange={actualizarState}
-                        value={turno.dueño}
+                        value={dueño}
                     />
                 </label>
 
@@ -83,7 +85,7 @@ const Form = (props) => {
                         name='fecha'
                         className='u-full-width'
                         onChange={actualizarState}
-                        value={turno.fecha}
+                        value={fecha}
                     />
                 </label>
 
@@ -93,7 +95,7 @@ const Form = (props) => {
                         name='hora'
                         className='u-full-width'
                         onChange={actualizarState}
-                        value={turno.hora}
+                        value={hora}
                     />
                 </label>
 
@@ -102,17 +104,22 @@ const Form = (props) => {
                     id="" cols="30" rows="10" 
                     className='u-full-width' 
                     onChange={actualizarState}
-                    value={turno.sintomas}
+                    value={sintomas}
                     >
                     </textarea>
                 </label>
 
                 <button type="submit" className='u-full-width button-primary'> Agendar turno </button>
-                {error === 'error' ? <p className='alerta-error'> Completar todos los datos</p> : error === 'exito' ? <p className='alerta-exito'> Turno agendado</p> : null}
+                {error === true ? <p className='alerta-error'> Completar todos los datos</p> : error === false ? <p className='alerta-exito'> Turno agendado</p> : null}
 
             </form>
         </div>
     )
 }
+
+Form.propTypes ={
+    agendarTurno: PropTypes.func
+
+}   
 
 export default Form

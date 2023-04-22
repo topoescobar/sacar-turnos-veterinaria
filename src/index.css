@@ -83,13 +83,15 @@ input[type="time"] {
 }
 
 .alerta-error {
-  background-color: red;
-  color: white;
+  background-color: whitesmoke;
+  color: red;
   padding: 1rem;
   font-size: 2rem;
   text-transform: uppercase;
   text-align: center;
   font-family:  'Staatliches', cursive;
+  opacity: 1;
+  /* transition: opacity 5s linear; */
 } 
 
 .alerta-exito {
@@ -100,4 +102,6 @@ input[type="time"] {
   text-transform: uppercase;
   text-align: center;
   font-family:  'Staatliches', cursive;
+  opacity: 0;
+  transition: opacity 4s linear;
 } 

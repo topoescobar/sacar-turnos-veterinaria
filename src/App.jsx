@@ -1,11 +1,25 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import Form from './components/Form'
 import Turno from './components/Turno'
 
 function App() {
 
-  const [turnosArray, setTurnosArray] = useState([])
+  let turnosGuardados = JSON.parse(localStorage.getItem('turnitos'))
+  if (!turnosGuardados) {
+    turnosGuardados = []
+  }
+  const [turnosArray, setTurnosArray] = useState(turnosGuardados)
+
+  //si hay cambios en el state lo guarda en localstorage
+  useEffect( ()=> {
+    if(turnosGuardados) {
+      localStorage.setItem('turnitos', JSON.stringify(turnosArray))
+    } else {
+      localStorage.setItem('turnitos', JSON.stringify([]))
+    }
+  }, [turnosArray] )
+
   const tituloTurnos = turnosArray.length === 0 ? 'Sin turnos agendados' : 'Administrar turnos'
 
   const crearTurno = (turno) => {
@@ -16,6 +30,7 @@ function App() {
     let turnosModificado = turnosArray.filter(tur=> tur.id !== id)
     setTurnosArray(turnosModificado) //no hace falta el spread op xq filter crea un array nuevo
   }
+
 
   return (
     <>
